@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vam.dao.TaskTypeMapper">
+    <resultMap id="BaseResultMap" type="com.vam.dmo.TaskTypeDmo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="biz_type" property="bizType" jdbcType="VARCHAR"/>
+        <result column="max_run_times" property="maxRunTimes" jdbcType="INTEGER"/>
+        <result column="run_intervals" property="runIntervals" jdbcType="VARCHAR"/>
+        <result column="delayed_run_minutes" property="delayedRunMinutes" jdbcType="INTEGER"/>
+        <result column="exec_type" property="execType" jdbcType="VARCHAR"/>
+        <result column="exec_service" property="execService" jdbcType="VARCHAR"/>
+        <result column="exec_method" property="execMethod" jdbcType="VARCHAR"/>
+        <result column="per_page_count" property="perPageCount" jdbcType="INTEGER"/>
+        <result column="per_thread_count" property="perThreadCount" jdbcType="INTEGER"/>
+        <result column="timeout_minutes" property="timeoutMinutes" jdbcType="INTEGER"/>
+        <result column="exception_proc_type" property="exceptionProcType" jdbcType="INTEGER"/>
+        <result column="exception_proc" property="exceptionProc" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, biz_type, max_run_times, run_intervals, delayed_run_minutes, exec_type, exec_service, 
+    exec_method, per_page_count, per_thread_count, timeout_minutes, exception_proc_type,
+    exception_proc, status
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from vam_task_type
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectByBizType" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from vam_task_type
+        where biz_type = #{bizType,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from vam_task_type
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from vam_task_type
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <insert id="insert" parameterType="com.vam.dmo.TaskTypeDmo">
+    insert into vam_task_type (id, biz_type, max_run_times, 
+      run_intervals, delayed_run_minutes, exec_type, 
+      exec_service, exec_method, per_page_count, 
+      per_thread_count, timeout_minutes,
+      exception_proc_type, exception_proc, status
+      )
+    values (#{id,jdbcType=BIGINT}, #{bizType,jdbcType=VARCHAR}, #{maxRunTimes,jdbcType=INTEGER}, 
+      #{runIntervals,jdbcType=VARCHAR}, #{delayedRunMinutes,jdbcType=INTEGER}, #{execType,jdbcType=VARCHAR}, 
+      #{execService,jdbcType=VARCHAR}, #{execMethod,jdbcType=VARCHAR}, #{perPageCount,jdbcType=INTEGER}, 
+      #{perThreadCount,jdbcType=INTEGER},  #{timeoutMinutes,jdbcType=INTEGER},
+      #{exceptionProcType,jdbcType=INTEGER}, #{exceptionProc,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.vam.dmo.TaskTypeDmo">
+        update vam_task_type
+        <set>
+            <if test="bizType != null">
+                biz_type = #{bizType,jdbcType=VARCHAR},
+            </if>
+            <if test="maxRunTimes != null">
+                max_run_times = #{maxRunTimes,jdbcType=INTEGER},
+            </if>
+            <if test="runIntervals != null">
+                run_intervals = #{runIntervals,jdbcType=VARCHAR},
+            </if>
+            <if test="delayedRunMinutes != null">
+                delayed_run_minutes = #{delayedRunMinutes,jdbcType=INTEGER},
+            </if>
+            <if test="execType != null">
+                exec_type = #{execType,jdbcType=VARCHAR},
+            </if>
+            <if test="execService != null">
+                exec_service = #{execService,jdbcType=VARCHAR},
+            </if>
+            <if test="execMethod != null">
+                exec_method = #{execMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="perPageCount != null">
+                per_page_count = #{perPageCount,jdbcType=INTEGER},
+            </if>
+            <if test="perThreadCount != null">
+                per_thread_count = #{perThreadCount,jdbcType=INTEGER},
+            </if>
+            <if test="timeoutMinutes != null">
+                timeout_minutes = #{timeoutMinutes,jdbcType=INTEGER},
+            </if>
+            <if test="exceptionProcType != null">
+                exception_proc_type = #{exceptionProcType,jdbcType=INTEGER},
+            </if>
+            <if test="exceptionProc != null">
+                exception_proc = #{exceptionProc,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.vam.dmo.TaskTypeDmo">
+    update vam_task_type
+    set biz_type = #{bizType,jdbcType=VARCHAR},
+      max_run_times = #{maxRunTimes,jdbcType=INTEGER},
+      run_intervals = #{runIntervals,jdbcType=VARCHAR},
+      delayed_run_minutes = #{delayedRunMinutes,jdbcType=INTEGER},
+      exec_type = #{execType,jdbcType=VARCHAR},
+      exec_service = #{execService,jdbcType=VARCHAR},
+      exec_method = #{execMethod,jdbcType=VARCHAR},
+      per_page_count = #{perPageCount,jdbcType=INTEGER},
+      per_thread_count = #{perThreadCount,jdbcType=INTEGER},
+      timeout_minutes = #{timeoutMinutes,jdbcType=INTEGER},
+      exception_proc_type = #{exceptionProcType,jdbcType=INTEGER},
+      exception_proc = #{exceptionProc,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

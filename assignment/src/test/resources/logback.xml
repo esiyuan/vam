@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--<appender name="main" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--<file>${logPkg}/main.log</file>-->
+    <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--&lt;!&ndash; daily rollover &ndash;&gt;-->
+    <!--<fileNamePattern>${logPkg}/backup/main.%d{yyyy-MM-dd}.log</fileNamePattern>-->
+    <!--&lt;!&ndash; keep 30 days' worth of history capped at 3GB total size &ndash;&gt;-->
+    <!--<maxHistory>30</maxHistory>-->
+    <!--<totalSizeCap>3GB</totalSizeCap>-->
+
+    <!--</rollingPolicy>-->
+
+    <!--<encoder>-->
+    <!--<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>-->
+    <!--</encoder>-->
+    <!--</appender>-->
+
+
+    <logger name="org.springframework" level="info"/>
+    <logger name="org.mybatis" level="info"/>
+    <logger name="org.springframework.web.servlet.handler" level="info"/>
+    <logger name="org.springframework.web.servlet.mvc" level="info"/>
+    <logger name="org.springframework.boot.web.filter" level="info"/>
+    <!--<logger name="org.springframework.web.servlet" level="info"/>-->
+
+    <logger name="org.springframework.boot.autoconfigure.logging" level="info"/>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
+        <!--<appender-ref ref="main"/>-->
+    </root>
+</configuration>

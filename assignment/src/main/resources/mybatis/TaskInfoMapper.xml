@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vam.dao.TaskInfoMapper">
+    <resultMap id="BaseResultMap" type="com.vam.dmo.TaskInfoDmo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="biz_key" property="bizKey" jdbcType="VARCHAR"/>
+        <result column="biz_type" property="bizType" jdbcType="VARCHAR"/>
+        <result column="run_count" property="runCount" jdbcType="INTEGER"/>
+        <result column="next_run_time" property="nextRunTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="timeout_time" property="timeoutTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, biz_key, biz_type, run_count, next_run_time, create_time, last_update_time, status, 
+    timeout_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from vam_task_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <!--任务执行中，并且超时的任务-->
+    <select id="selectRunningTaskOfTimeOut" resultMap="BaseResultMap" parameterType="com.vam.dmo.TaskInfoDmo">
+        select
+        id
+        from vam_task_info
+        where status = 1 and
+        timeout_time &lt;= #{timeoutTime,jdbcType=TIMESTAMP}
+        <if test="bizType != null">
+            and biz_type = #{bizType,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <!--获取等待下次执行的任务-->
+    <select id="selectWaitingTaskOfTimeComing" resultMap="BaseResultMap" parameterType="com.vam.dmo.TaskInfoDmo">
+        select
+        <include refid="Base_Column_List"/>
+        from vam_task_info
+        where status = 0 and
+        next_run_time &lt;= #{nextRunTime,jdbcType=TIMESTAMP}
+        <if test="bizType != null">
+            and biz_type = #{bizType,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from vam_task_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.vam.dmo.TaskInfoDmo">
+    insert into vam_task_info (id, biz_key, biz_type, 
+      run_count, next_run_time, create_time, 
+      last_update_time, status, timeout_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{bizKey,jdbcType=VARCHAR}, #{bizType,jdbcType=VARCHAR}, 
+      #{runCount,jdbcType=INTEGER}, #{nextRunTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{timeoutTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.vam.dmo.TaskInfoDmo">
+        update vam_task_info
+        <set>
+            <if test="bizKey != null">
+                biz_key = #{bizKey,jdbcType=VARCHAR},
+            </if>
+            <if test="bizType != null">
+                biz_type = #{bizType,jdbcType=VARCHAR},
+            </if>
+            <if test="runCount != null">
+                run_count = #{runCount,jdbcType=INTEGER},
+            </if>
+            <if test="nextRunTime != null">
+                next_run_time = #{nextRunTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="timeoutTime != null">
+                timeout_time = #{timeoutTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="batchUpdateWaitingTasks" parameterType="map">
+        update vam_task_info set
+        run_count = run_count + 1,
+        next_run_time = #{nextRunTime,jdbcType=TIMESTAMP},
+        last_update_time = CURRENT_TIMESTAMP ,
+        status = 1,
+        timeout_time = #{timeoutTime,jdbcType=TIMESTAMP}
+        where id in (
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim suffixOverrides=", ">
+                #{item.id,jdbcType=BIGINT},
+            </trim>
+        </foreach>
+        ) and status = 0
+    </update>
+    <update id="batchUpdateRunStatusByPrimaryKey" parameterType="list">
+        update vam_task_info
+        set status = #{status,jdbcType=INTEGER}
+        where id in (
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim suffixOverrides=", ">
+                #{item.id,jdbcType=BIGINT},
+            </trim>
+        </foreach>
+        )
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.vam.dmo.TaskInfoDmo">
+    update vam_task_info
+    set biz_key = #{bizKey,jdbcType=VARCHAR},
+      biz_type = #{bizType,jdbcType=VARCHAR},
+      run_count = #{runCount,jdbcType=INTEGER},
+      next_run_time = #{nextRunTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      timeout_time = #{timeoutTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

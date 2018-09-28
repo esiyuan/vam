@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vam.dao.ExceptionMapper">
+    <resultMap id="BaseResultMap" type="com.vam.dmo.ExceptionDmo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="biz_key" property="bizKey" jdbcType="VARCHAR"/>
+        <result column="biz_type" property="bizType" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, biz_key, biz_type, create_time, last_update_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from vam_exception
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from vam_exception
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.vam.dmo.ExceptionDmo">
+    insert into vam_exception (id, biz_key, biz_type, 
+      create_time, last_update_time)
+    values (#{id,jdbcType=BIGINT}, #{bizKey,jdbcType=VARCHAR}, #{bizType,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.vam.dmo.ExceptionDmo">
+        update vam_exception
+        <set>
+            <if test="bizKey != null">
+                biz_key = #{bizKey,jdbcType=VARCHAR},
+            </if>
+            <if test="bizType != null">
+                biz_type = #{bizType,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.vam.dmo.ExceptionDmo">
+    update vam_exception
+    set biz_key = #{bizKey,jdbcType=VARCHAR},
+      biz_type = #{bizType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
