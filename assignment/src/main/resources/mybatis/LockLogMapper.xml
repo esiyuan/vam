@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.vam.dao.LockLogMapper">
-    <resultMap id="BaseResultMap" type="com.vam.dmo.LockLogDmo">
+<mapper namespace="com.vam.task.dao.LockLogMapper">
+    <resultMap id="BaseResultMap" type="com.vam.task.dmo.LockLogDmo">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="lock_type" property="lockType" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
@@ -29,7 +29,7 @@
     delete from vam_lock_log
     where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.vam.dmo.LockLogDmo" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insert" parameterType="com.vam.task.dmo.LockLogDmo" keyProperty="id" useGeneratedKeys="true">
     insert into vam_lock_log (id, lock_type, create_time, 
       timeout_time, status
       )
@@ -38,7 +38,7 @@
       )
   </insert>
 
-    <select id="selectTimeoutIds" resultMap="BaseResultMap" parameterType="com.vam.dmo.LockLogDmo">
+    <select id="selectTimeoutIds" resultMap="BaseResultMap" parameterType="com.vam.task.dmo.LockLogDmo">
         select id
         from vam_lock_log
         <trim prefix="where" prefixOverrides="and|or ">
@@ -63,7 +63,7 @@
         )
     </delete>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.vam.dmo.LockLogDmo">
+    <update id="updateByPrimaryKeySelective" parameterType="com.vam.task.dmo.LockLogDmo">
         update vam_lock_log
         <set>
             <if test="lockType != null">
@@ -81,7 +81,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.vam.dmo.LockLogDmo">
+    <update id="updateByPrimaryKey" parameterType="com.vam.task.dmo.LockLogDmo">
     update vam_lock_log
     set lock_type = #{lockType,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

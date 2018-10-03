@@ -92,8 +92,8 @@ public class DaoConfig implements EnvironmentAware, ApplicationContextAware {
         Properties properties = new Properties();
         properties.put("dialect", "mysql");
         properties.put("reasonable", true);
-        properties.put("offsetAsPageNum", true);
-        properties.put("pageSizeZero", true);
+        properties.put("offsetAsPageNum", false);
+        properties.put("pageSizeZero", false);
         pageHelper.setProperties(properties);
         return pageHelper;
     }

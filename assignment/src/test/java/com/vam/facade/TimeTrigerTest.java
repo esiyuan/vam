@@ -1,5 +1,6 @@
 package com.vam.facade;
 
+import com.vam.task.facade.TimeTriger;
 import com.vam.service.ServiceConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;

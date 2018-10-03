@@ -1,7 +1,6 @@
 package com.vam.service;
 
-import com.vam.DaoConfig;
-import com.vam.service.intf.LockLogService;
+import com.vam.task.service.intf.LockLogService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

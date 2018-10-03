@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.vam.dao.ExceptionMapper">
-    <resultMap id="BaseResultMap" type="com.vam.dmo.ExceptionDmo">
+<mapper namespace="com.vam.task.dao.ExceptionMapper">
+    <resultMap id="BaseResultMap" type="com.vam.task.dmo.ExceptionDmo">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="biz_key" property="bizKey" jdbcType="VARCHAR"/>
         <result column="biz_type" property="bizType" jdbcType="VARCHAR"/>
@@ -21,13 +21,13 @@
     delete from vam_exception
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <insert id="insert" parameterType="com.vam.dmo.ExceptionDmo">
+    <insert id="insert" parameterType="com.vam.task.dmo.ExceptionDmo">
     insert into vam_exception (id, biz_key, biz_type, 
       create_time, last_update_time)
     values (#{id,jdbcType=BIGINT}, #{bizKey,jdbcType=VARCHAR}, #{bizType,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP})
   </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.vam.dmo.ExceptionDmo">
+    <update id="updateByPrimaryKeySelective" parameterType="com.vam.task.dmo.ExceptionDmo">
         update vam_exception
         <set>
             <if test="bizKey != null">
@@ -45,7 +45,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.vam.dmo.ExceptionDmo">
+    <update id="updateByPrimaryKey" parameterType="com.vam.task.dmo.ExceptionDmo">
     update vam_exception
     set biz_key = #{bizKey,jdbcType=VARCHAR},
       biz_type = #{bizType,jdbcType=VARCHAR},

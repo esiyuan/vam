@@ -1,11 +1,9 @@
 package com.vam.dao;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.vam.task.dao.LockLogMapper;
 import com.vam.DaoConfig;
-import com.vam.dmo.LockLogDmo;
-import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
+import com.vam.task.dmo.LockLogDmo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

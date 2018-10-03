@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.vam.dao.TaskInfoMapper">
-    <resultMap id="BaseResultMap" type="com.vam.dmo.TaskInfoDmo">
+<mapper namespace="com.vam.task.dao.TaskInfoMapper">
+    <resultMap id="BaseResultMap" type="com.vam.task.dmo.TaskInfoDmo">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="biz_key" property="bizKey" jdbcType="VARCHAR"/>
         <result column="biz_type" property="bizType" jdbcType="VARCHAR"/>
@@ -23,7 +23,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
     <!--任务执行中，并且超时的任务-->
-    <select id="selectRunningTaskOfTimeOut" resultMap="BaseResultMap" parameterType="com.vam.dmo.TaskInfoDmo">
+    <select id="selectRunningTaskOfTimeOut" resultMap="BaseResultMap" parameterType="com.vam.task.dmo.TaskInfoDmo">
         select
         id
         from vam_task_info
@@ -34,7 +34,7 @@
         </if>
     </select>
     <!--获取等待下次执行的任务-->
-    <select id="selectWaitingTaskOfTimeComing" resultMap="BaseResultMap" parameterType="com.vam.dmo.TaskInfoDmo">
+    <select id="selectWaitingTaskOfTimeComing" resultMap="BaseResultMap" parameterType="com.vam.task.dmo.TaskInfoDmo">
         select
         <include refid="Base_Column_List"/>
         from vam_task_info
@@ -49,7 +49,7 @@
     delete from vam_task_info
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <insert id="insert" parameterType="com.vam.dmo.TaskInfoDmo">
+    <insert id="insert" parameterType="com.vam.task.dmo.TaskInfoDmo">
     insert into vam_task_info (id, biz_key, biz_type, 
       run_count, next_run_time, create_time, 
       last_update_time, status, timeout_time
@@ -59,7 +59,7 @@
       #{lastUpdateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{timeoutTime,jdbcType=TIMESTAMP}
       )
   </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.vam.dmo.TaskInfoDmo">
+    <update id="updateByPrimaryKeySelective" parameterType="com.vam.task.dmo.TaskInfoDmo">
         update vam_task_info
         <set>
             <if test="bizKey != null">
@@ -115,7 +115,7 @@
         </foreach>
         )
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.vam.dmo.TaskInfoDmo">
+    <update id="updateByPrimaryKey" parameterType="com.vam.task.dmo.TaskInfoDmo">
     update vam_task_info
     set biz_key = #{bizKey,jdbcType=VARCHAR},
       biz_type = #{bizType,jdbcType=VARCHAR},

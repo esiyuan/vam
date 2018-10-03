@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.vam.dao.TaskTypeMapper">
-    <resultMap id="BaseResultMap" type="com.vam.dmo.TaskTypeDmo">
+<mapper namespace="com.vam.task.dao.TaskTypeMapper">
+    <resultMap id="BaseResultMap" type="com.vam.task.dmo.TaskTypeDmo">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="biz_type" property="bizType" jdbcType="VARCHAR"/>
         <result column="max_run_times" property="maxRunTimes" jdbcType="INTEGER"/>
@@ -41,12 +41,60 @@
         from vam_task_type
     </select>
 
+    <select id="search" resultMap="BaseResultMap" parameterType="com.vam.task.dmo.TaskTypeDmo">
+        select
+        <include refid="Base_Column_List"/>
+        from vam_task_type
+        <where>
+            <if test="bizType != null">
+                and biz_type = #{bizType,jdbcType=VARCHAR}
+            </if>
+            <if test="maxRunTimes != null">
+                and max_run_times = #{maxRunTimes,jdbcType=INTEGER}
+            </if>
+            <if test="runIntervals != null">
+                and run_intervals = #{runIntervals,jdbcType=VARCHAR}
+            </if>
+            <if test="delayedRunMinutes != null">
+                and delayed_run_minutes = #{delayedRunMinutes,jdbcType=INTEGER}
+            </if>
+            <if test="execType != null">
+                and exec_type = #{execType,jdbcType=VARCHAR}
+            </if>
+            <if test="execService != null">
+                and exec_service = #{execService,jdbcType=VARCHAR}
+            </if>
+            <if test="execMethod != null">
+                and exec_method = #{execMethod,jdbcType=VARCHAR}
+            </if>
+            <if test="perPageCount != null">
+                and per_page_count = #{perPageCount,jdbcType=INTEGER}
+            </if>
+            <if test="perThreadCount != null">
+                and per_thread_count = #{perThreadCount,jdbcType=INTEGER}
+            </if>
+            <if test="timeoutMinutes != null">
+                and timeout_minutes = #{timeoutMinutes,jdbcType=INTEGER}
+            </if>
+            <if test="exceptionProcType != null">
+                and exception_proc_type = #{exceptionProcType,jdbcType=INTEGER}
+            </if>
+            <if test="exceptionProc != null">
+                and exception_proc = #{exceptionProc,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+
+        </where>
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from vam_task_type
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
-    <insert id="insert" parameterType="com.vam.dmo.TaskTypeDmo">
+    <insert id="insert" parameterType="com.vam.task.dmo.TaskTypeDmo">
     insert into vam_task_type (id, biz_type, max_run_times, 
       run_intervals, delayed_run_minutes, exec_type, 
       exec_service, exec_method, per_page_count, 
@@ -60,7 +108,7 @@
       #{exceptionProcType,jdbcType=INTEGER}, #{exceptionProc,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
       )
   </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.vam.dmo.TaskTypeDmo">
+    <update id="updateByPrimaryKeySelective" parameterType="com.vam.task.dmo.TaskTypeDmo">
         update vam_task_type
         <set>
             <if test="bizType != null">
@@ -105,7 +153,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.vam.dmo.TaskTypeDmo">
+    <update id="updateByPrimaryKey" parameterType="com.vam.task.dmo.TaskTypeDmo">
     update vam_task_type
     set biz_type = #{bizType,jdbcType=VARCHAR},
       max_run_times = #{maxRunTimes,jdbcType=INTEGER},
