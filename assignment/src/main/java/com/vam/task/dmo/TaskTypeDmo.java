@@ -20,9 +20,6 @@ public class TaskTypeDmo {
     private String runIntervals;
 
     private Integer delayedRunMinutes;
-
-
-
     private Integer perPageCount;
 
     private Integer perThreadCount;

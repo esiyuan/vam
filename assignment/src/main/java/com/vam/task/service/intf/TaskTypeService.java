@@ -14,5 +14,6 @@ public interface TaskTypeService {
 
     Page<TaskTypeDmo> search(TaskTypeDmo taskTypeDmo);
 
+    int insert(TaskTypeDmo record);
 
 }

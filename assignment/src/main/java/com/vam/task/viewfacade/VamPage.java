@@ -9,6 +9,14 @@ import lombok.ToString;
 @Getter
 @ToString
 public class VamPage {
+
+    public static VamPage START;
+
+    static {
+        START = new VamPage();
+        START.start = 1;
+    }
+
     /**
      * 开始页面
      */
@@ -36,8 +44,9 @@ public class VamPage {
         vamPage.setStart(page.getPageNum());
         vamPage.setTotalCount(page.getTotal());
         vamPage.setPageSize(page.getPageSize());
-        vamPage.setIndexStart(page.getStartRow());
-        vamPage.setIndexEnd(page.getEndRow());
+        vamPage.setIndexStart(page.getStartRow() + 1);
+//        vamPage.setIndexEnd(page.getEndRow());
+        vamPage.setIndexEnd((page.getPageNum() - 1) * page.getPageSize() + page.size());
         return vamPage;
     }
 }

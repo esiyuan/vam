@@ -20,4 +20,20 @@ public class TaskTypeViewService {
         return page;
     }
 
+    public int updateTaskType(TaskTypeDmo taskTypeDmo) {
+        return taskTypeMapper.updateByPrimaryKeySelective(taskTypeDmo);
+    }
+
+    public int saveTaskType(TaskTypeDmo taskTypeDmo) {
+        return taskTypeMapper.insert(taskTypeDmo);
+    }
+
+    public TaskTypeDmo searchById(long id) {
+        return taskTypeMapper.selectByPrimaryKey(id);
+    }
+
+    public int deleteById(long id) {
+        return taskTypeMapper.deleteByPrimaryKey(id);
+    }
+
 }

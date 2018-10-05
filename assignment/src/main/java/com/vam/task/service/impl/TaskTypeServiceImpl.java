@@ -28,4 +28,9 @@ public class TaskTypeServiceImpl implements TaskTypeService {
     public Page<TaskTypeDmo> search(TaskTypeDmo taskTypeDmo) {
         return null;
     }
+
+    @Override
+    public int insert(TaskTypeDmo record) {
+        return taskTypeMapper.insert(record);
+    }
 }

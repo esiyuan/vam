@@ -23,14 +23,23 @@
                     </div>
                     <div class='col-md-3'>
                         <div class='input-group'>
+                                            <span class='input-group-btn'>
+                            <a class='btn btn-info' href='new'>
+                                <i class='glyphicon glyphicon-plus-sign'>新增</i>
+                            </a>
+                            </span>
                             <input id="typeListPageStart" hidden="hidden" name="start" type='text'
                                    value="${page["start"]}"/>
-                            <input class='form-control' placeholder='任务类型' type='text'>
+                            <input class='form-control' id="searchBizType" name="bizType" value="${param['bizType']}"
+                                   placeholder='任务类型'
+                                   type='text'>
+
                             <span class='input-group-btn'>
-                    <button class='btn' type='button' onclick="search(1)">
-                      <i class='icon-search'>查询</i>
-                    </button>
-                  </span>
+                                <button class='btn' type='button' onclick="taskSearch(1)" title="查询">
+                                    <i class='glyphicon glyphicon-search'></i>
+                                </button>
+                            </span>
+
                         </div>
                     </div>
                 </div>
@@ -42,8 +51,6 @@
                     <td><span>没有数据！</span></td>
                 </tr>
             </c:if>
-
-
             <thead>
             <tr>
                 <th>序号</th>
@@ -58,32 +65,60 @@
             </thead>
             <tbody>
             <c:forEach items="${typeList}" varStatus="status" var="each">
-
                 <tr class=''>
-                    <td>${status["index"]}</td>
+                    <td>${status["index"] + 1}</td>
                     <td>${each["bizType"]}</td>
                     <td>${each["maxRunTimes"]}</td>
-                    <td>${each["status"]}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${each['status'] == 0}">
+                                <i class='glyphicon'>关闭</i>
+                            </c:when>
+                            <c:when test="${each['status'] == 1}">
+                                <i class='glyphicon'>开启</i>
+                            </c:when>
+                        </c:choose>
+                    </td>
                     <td>${each["timeoutMinutes"]}</td>
                     <td class='action'>
-                        <a class='btn btn-info' data-toggle='tooltip' href='update?id=${each["id"]}' title='Zoom'>
-                            <i class='icon-zoom-in'>修改</i>
+                        <a class='btn btn-info' data-toggle='tooltip' href='update?id=${each["id"]}' title='修改'>
+                            <i class='glyphicon glyphicon-edit'></i>
                         </a>
-                        <a class='btn btn-info' href='#'>
-                            <i class='icon-edit'></i>
-                        </a>
-                        <a class='btn btn-danger' href='#'>
-                            <i class='icon-trash'>删除</i>
-                        </a>
+
+                        <button class='btn btn-danger' type='button' onclick="del(${each["id"]})"
+                                title="删除">
+                            <i class='glyphicon glyphicon-trash'></i>
+                        </button>
+                        <c:if test="${each['status'] == 0}">
+                            <button class='btn btn-warning' type='button' onclick="statusConvert(${each["id"]}, 1)"
+                                    title="开启">
+                                <i class='glyphicon glyphicon-play'></i>
+                            </button>
+                        </c:if>
+                        <c:if test="${each['status'] == 1}">
+                            <button class='btn btn-warning' type='button' onclick="statusConvert(${each["id"]}, 0)"
+                                    title="关闭">
+                                <i class='glyphicon glyphicon-stop'></i>
+                            </button>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>
 
             </tbody>
         </table>
+
+        <div style="display: none;">
+            <form id="statusConvertForm" action="convertStatus" method="post">
+                <input type="text" id="statusConvertForm_status" name="status">
+                <input type="text" id="statusConvertForm_id" name="id">
+                <input type="text" id="statusConvertForm_bizType" name="bizType">
+            </form>
+        </div>
+
         <div class='panel-footer' style="padding-left: 70%;">
             <div class='pull-left'>
-                展示${page.indexStart} 到 ${page.indexEnd} 条 / 总数 ${page.totalCount}
+                展示${page.indexStart} 到 ${page.indexEnd} 条 / 总共 ${page.totalCount} 条
             </div>
             <ul class='pagination pagination-sm '>
                 <li>
@@ -98,7 +133,6 @@
         </div>
     </div>
 </div>
-<!-- Footer -->
 
 
 </body>

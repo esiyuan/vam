@@ -33,11 +33,18 @@
         <curator.varsion>4.0.1</curator.varsion>
         <mybatis.version>3.4.5</mybatis.version>
         <druid.version>1.1.6</druid.version>
+        <dozer.version>5.5.1</dozer.version>
+        <jstl.version>1.2</jstl.version>
+        <pagehelper.version>4.1.6</pagehelper.version>
         <jcl-over-slf4j.version>1.7.25</jcl-over-slf4j.version>
     </properties>
     <dependencyManagement>
-
         <dependencies>
+            <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer</artifactId>
+                <version>${dozer.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
@@ -120,7 +127,7 @@
             <dependency>
                 <groupId>jstl</groupId>
                 <artifactId>jstl</artifactId>
-                <version>1.2</version>
+                <version>${jstl.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -177,15 +184,10 @@
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
             </dependency>
-            <!--<dependency>-->
-                <!--<groupId>com.github.jsqlparser</groupId>-->
-                <!--<artifactId>jsqlparser</artifactId>-->
-                <!--<version>0.9.1</version>-->
-            <!--</dependency>-->
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper</artifactId>
-                <version>4.1.6</version>
+                <version>${pagehelper.version}</version>
             </dependency>
 
             <dependency>
