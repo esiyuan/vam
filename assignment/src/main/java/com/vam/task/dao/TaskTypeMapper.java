@@ -20,7 +20,7 @@ public interface TaskTypeMapper {
 
     int updateByPrimaryKey(TaskTypeDmo record);
 
-    public Page<TaskTypeDmo> search(TaskTypeDmo taskTypeDmo);
+     Page<TaskTypeDmo> search(TaskTypeDmo taskTypeDmo);
 
 
 }

@@ -101,7 +101,7 @@ public class DaoConfig implements EnvironmentAware, ApplicationContextAware {
     @Bean
     MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setBasePackage("com.vam.dao");
+        mapperScannerConfigurer.setBasePackage("com.vam.task.dao");
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactoryBean");
         return mapperScannerConfigurer;
     }

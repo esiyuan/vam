@@ -33,6 +33,38 @@
             and biz_type = #{bizType,jdbcType=VARCHAR}
         </if>
     </select>
+    <select id="search" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from vam_task_info
+        <where>
+            <if test="bizKey != null and bizKey != ''">
+                and biz_key = #{bizKey,jdbcType=VARCHAR}
+            </if>
+            <if test="bizType != null and bizType != ''">
+                and biz_type = #{bizType,jdbcType=VARCHAR}
+            </if>
+            <if test="runCount != null and runCount != ''">
+                and run_count = #{runCount,jdbcType=INTEGER}
+            </if>
+            <if test="nextRunTime != null and nextRunTime != ''">
+                and next_run_time = #{nextRunTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="lastUpdateTime != null and lastUpdateTime != ''">
+                and last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="timeoutTime != null and timeoutTime != ''">
+                and timeout_time = #{timeoutTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+
+    </select>
     <!--获取等待下次执行的任务-->
     <select id="selectWaitingTaskOfTimeComing" resultMap="BaseResultMap" parameterType="com.vam.task.dmo.TaskInfoDmo">
         select

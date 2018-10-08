@@ -6,30 +6,32 @@
 
     <meta charset='utf-8'>
     <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
-    <title>Tables</title>
+    <title>任务类型管理</title>
 
     <link href="/assets/stylesheets/application-a07755f5.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/images/favicon.ico" rel="icon" type="image/ico"/>
+    <link rel="stylesheet" href="/assets/page/pagination.css">
     <script src="/assets/javascripts/jquery.min.js.js"></script>
+    <script src="/assets/page/pagination.js"></script>
+    <script src="/assets/page/page.js"></script>
     <script src="/assets/javascripts/typeList.js"></script>
 </head>
 <body class=''>
 <div id=''>
     <div class='panel panel-default grid'>
         <div class='panel-body filters'>
-            <form id="typeListForm" method="post">
+            <form id="typeListForm" method="post" action="search.htm">
                 <div class='row' style="padding-right: 10%">
                     <div class='col-md-9'>
                     </div>
                     <div class='col-md-3'>
                         <div class='input-group'>
                                             <span class='input-group-btn'>
-                            <a class='btn btn-info' href='new'>
+                            <a class='btn btn-info' href='new.htm'>
                                 <i class='glyphicon glyphicon-plus-sign'>新增</i>
                             </a>
                             </span>
-                            <input id="typeListPageStart" hidden="hidden" name="start" type='text'
-                                   value="${page["start"]}"/>
+                            <%@include file="./common/cur_index.jsp" %>
                             <input class='form-control' id="searchBizType" name="bizType" value="${param['bizType']}"
                                    placeholder='任务类型'
                                    type='text'>
@@ -56,10 +58,12 @@
                 <th>序号</th>
                 <th>任务类型</th>
                 <th>最大执行次数</th>
+                <th>重试间隔</th>
+                <th>超时时间(分)</th>
+                <th>单次任务数</th>
                 <th>状态</th>
-                <th>超时时间</th>
                 <th class='actions'>
-                    Actions
+                    操作
                 </th>
             </tr>
             </thead>
@@ -69,6 +73,9 @@
                     <td>${status["index"] + 1}</td>
                     <td>${each["bizType"]}</td>
                     <td>${each["maxRunTimes"]}</td>
+                    <td>${each["runIntervals"]}</td>
+                    <td>${each["timeoutMinutes"]}</td>
+                    <td>${each["perPageCount"]}</td>
                     <td>
                         <c:choose>
                             <c:when test="${each['status'] == 0}">
@@ -79,9 +86,9 @@
                             </c:when>
                         </c:choose>
                     </td>
-                    <td>${each["timeoutMinutes"]}</td>
+
                     <td class='action'>
-                        <a class='btn btn-info' data-toggle='tooltip' href='update?id=${each["id"]}' title='修改'>
+                        <a class='btn btn-info' data-toggle='tooltip' href='update.htm?id=${each["id"]}' title='修改'>
                             <i class='glyphicon glyphicon-edit'></i>
                         </a>
 
@@ -115,22 +122,7 @@
                 <input type="text" id="statusConvertForm_bizType" name="bizType">
             </form>
         </div>
-
-        <div class='panel-footer' style="padding-left: 70%;">
-            <div class='pull-left'>
-                展示${page.indexStart} 到 ${page.indexEnd} 条 / 总共 ${page.totalCount} 条
-            </div>
-            <ul class='pagination pagination-sm '>
-                <li>
-                    <a href='#' onclick="taskSearch(${page["start"] - 1})">上一页</a>
-                </li>
-
-                <li>
-                    <a href='#' onclick="taskSearch(${page["start"] + 1})">下一页</a>
-                </li>
-            </ul>
-
-        </div>
+        <%@include file="./common/page.jsp" %>
     </div>
 </div>
 

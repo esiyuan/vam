@@ -1,6 +1,8 @@
 package com.vam.task.dao;
 
+import com.github.pagehelper.Page;
 import com.vam.task.dmo.TaskInfoDmo;
+import com.vam.task.dmo.TaskTypeDmo;
 
 import java.util.List;
 import java.util.Map;
@@ -27,4 +29,7 @@ public interface TaskInfoMapper {
     int batchUpdateWaitingTasks(Map<String, Object> record);
 
     int updateByPrimaryKey(TaskInfoDmo record);
+
+
+    Page<TaskInfoDmo> search(Map<String, Object> taskInfoMap);
 }

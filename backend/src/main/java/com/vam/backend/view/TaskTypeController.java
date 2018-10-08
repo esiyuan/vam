@@ -2,6 +2,7 @@ package com.vam.backend.view;
 
 import com.github.pagehelper.Page;
 import com.vam.backend.dto.TaskTypeParamDto;
+import com.vam.backend.util.ViewConstants;
 import com.vam.task.dmo.TaskTypeDmo;
 import com.vam.task.viewfacade.TaskTypeViewService;
 import com.vam.task.viewfacade.VamPage;
@@ -28,7 +29,7 @@ public class TaskTypeController {
     @Autowired
     private TaskTypeViewService taskTypeViewService;
 
-    @RequestMapping(value = "show")
+    @RequestMapping(value = "show.htm")
     public String show(ModelMap modelMap) {
         log.info("show");
         VamPage vamPage = new VamPage();
@@ -37,19 +38,19 @@ public class TaskTypeController {
         return search(null, vamPage, modelMap);
     }
 
-    @RequestMapping(value = "update")
+    @RequestMapping(value = "update.htm")
     public String typeUpdate(@Param("id") Integer id, ModelMap modelMap) {
         log.info("id = {}", id);
         modelMap.put("taskType", taskTypeViewService.searchById(id));
-        return "typeupdate";
+        return TYPE_PAGE;
     }
 
 
-    @RequestMapping(value = "/search")
+    @RequestMapping(value = "/search.htm")
     public String search(TaskTypeParamDto taskTypeParamDto, VamPage vamPage, ModelMap modelMap) {
         log.info("search {} - {}", taskTypeParamDto, vamPage);
         TaskTypeDmo taskTypeDmo = new TaskTypeDmo();
-        if (StringUtils.isNotBlank(taskTypeParamDto.getBizType())) {
+        if (taskTypeParamDto != null && StringUtils.isNotBlank(taskTypeParamDto.getBizType())) {
             taskTypeDmo.setBizType(taskTypeParamDto.getBizType());
         }
         Page<TaskTypeDmo> page = taskTypeViewService.search(taskTypeDmo, vamPage);
@@ -58,24 +59,29 @@ public class TaskTypeController {
         return TYPE_LIST_PAGE;
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    @RequestMapping(value = "delete.htm", method = RequestMethod.POST)
     @ResponseBody
     public String delete(@Param("id") Long id) {
         log.info("delete 参数 :{}", id);
         taskTypeViewService.deleteById(id);
-        return "ok";
+        return ViewConstants.ASYN_RETURN_OK;
     }
 
-    @RequestMapping(value = "new")
+    /**
+     * 新任务类型提交失败后重定向
+     *
+     * @param typeParamDto
+     * @param errorMsg
+     * @return
+     */
+    @RequestMapping(value = "new.htm")
     public String showNew(@ModelAttribute("taskType") TaskTypeParamDto typeParamDto,
                           @ModelAttribute("errorMsg") String errorMsg) {
         log.info("showNew param typeParamDto = {} errorMsg = {}", typeParamDto, errorMsg);
-
-
         return TYPE_PAGE;
     }
 
-    @RequestMapping(value = "typeSave", method = RequestMethod.POST)
+    @RequestMapping(value = "typeSave.htm", method = RequestMethod.POST)
     public String typeSave(TaskTypeParamDto typeParamDto, RedirectAttributes ra) {
         log.info("请求typeSave参数:{}", typeParamDto);
         try {
@@ -92,7 +98,7 @@ public class TaskTypeController {
         return "redirect:search";
     }
 
-    @RequestMapping(value = "convertStatus", method = RequestMethod.POST)
+    @RequestMapping(value = "convertStatus.htm", method = RequestMethod.POST)
     @ResponseBody
     public String convertStatus(TaskTypeParamDto taskTypeParamDto, ModelMap modelMap) {
         log.info("convertStatus 参数 :{}", taskTypeParamDto);
@@ -100,7 +106,7 @@ public class TaskTypeController {
         taskTypeDmo.setId(taskTypeParamDto.getId());
         taskTypeDmo.setStatus(taskTypeParamDto.getStatus());
         taskTypeViewService.updateTaskType(taskTypeDmo);
-        return "ok";
+        return ViewConstants.ASYN_RETURN_OK;
     }
 
     private void handlerModel(ModelMap modelMap, TaskTypeParamDto taskTypeParamDto, VamPage vamPage) {

@@ -1,6 +1,7 @@
 package com.vam.task.viewfacade;
 
 import com.github.pagehelper.Page;
+import com.google.common.primitives.Ints;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,13 +31,9 @@ public class VamPage {
      */
     private Long totalCount;
     /**
-     * 记录开始索引
+     * 总页数
      */
-    private Integer indexStart;
-    /**
-     * 记录结束索引
-     */
-    private Integer indexEnd;
+    private Integer pages;
 
 
     public static <T> VamPage from(Page<T> page) {
@@ -44,9 +41,7 @@ public class VamPage {
         vamPage.setStart(page.getPageNum());
         vamPage.setTotalCount(page.getTotal());
         vamPage.setPageSize(page.getPageSize());
-        vamPage.setIndexStart(page.getStartRow() + 1);
-//        vamPage.setIndexEnd(page.getEndRow());
-        vamPage.setIndexEnd((page.getPageNum() - 1) * page.getPageSize() + page.size());
+        vamPage.setPages(page.getPages());
         return vamPage;
     }
 }

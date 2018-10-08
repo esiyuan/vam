@@ -46,7 +46,7 @@ public class TaskTypeMapperTest {
     @Test
     public void search() {
         TaskTypeDmo taskTypeDmo = new TaskTypeDmo();
-        taskTypeDmo.setBizType("biz001");
+//        taskTypeDmo.setBizType("biz001");
 //        taskTypeDmo.setDelayedRunMinutes(1);
 //        taskTypeDmo.setExceptionProc("biz001");
 //        taskTypeDmo.setExceptionProcType(0);
