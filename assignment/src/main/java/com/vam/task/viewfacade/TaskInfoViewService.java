@@ -25,4 +25,5 @@ public class TaskInfoViewService {
     public int delete(long id) {
         return taskInfoMapper.deleteByPrimaryKey(id);
     }
+
 }

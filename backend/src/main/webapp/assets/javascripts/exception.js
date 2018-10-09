@@ -1,13 +1,13 @@
 $(function () {
 //日期时间选择器
     laydate.render({
-        elem: '#nextRunTimeStart', type: 'datetime'
+        elem: '#createTimeStart', type: 'datetime'
     });
     laydate.render({
-        elem: '#nextRunTimeEnd', type: 'datetime'
+        elem: '#createTimeEnd', type: 'datetime'
     });
     initPage(taskSearch)
-    $("#statusSelect").val($("#statusValue").val());
+
 });
 
 function taskSearch() {
@@ -26,10 +26,20 @@ function del(id) {
         }
     });
 
-
 }
 
-function selectStatusChange() {
-    $("#statusValue").val($("#statusSelect").val());
+function move(id) {
+    console.info("move :", id)
+    $.ajax({
+        type: "post",
+        url: "move.htm",
+        data: "id=" + id,// 要提交的表单 
+        success: function (msg) {
+            taskSearch();
+        }
+    });
+
+
+
 }
 
