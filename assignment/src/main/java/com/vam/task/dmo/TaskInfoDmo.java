@@ -3,17 +3,18 @@ package com.vam.task.dmo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
+import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Setter
 @Getter
 @ToString
 public class TaskInfoDmo {
-
-    public final static int RUNNING = 1;
-    public final static int WAITING = 0;
-
     private Long id;
 
     private String bizKey;
@@ -31,5 +32,7 @@ public class TaskInfoDmo {
     private Integer status;
 
     private Date timeoutTime;
+
+
 
 }

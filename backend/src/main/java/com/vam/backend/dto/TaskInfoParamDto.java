@@ -32,6 +32,8 @@ public class TaskInfoParamDto implements Serializable {
     private String nextRunTimeEnd;
     private Integer status;
 
+
+
     public Map<String, Object> toDmoMap() {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("id", id);

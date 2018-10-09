@@ -47,13 +47,16 @@
             <if test="runCount != null and runCount != ''">
                 and run_count = #{runCount,jdbcType=INTEGER}
             </if>
-            <if test="nextRunTime != null and nextRunTime != ''">
-                and next_run_time = #{nextRunTime,jdbcType=TIMESTAMP}
+            <if test="nextRunTimeStart != null ">
+                and next_run_time &gt;= #{nextRunTimeStart,jdbcType=TIMESTAMP}
             </if>
-            <if test="createTime != null and createTime != ''">
+            <if test="nextRunTimeEnd != null ">
+                and next_run_time &lt;= #{nextRunTimeEnd,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTime != null ">
                 and create_time = #{createTime,jdbcType=TIMESTAMP}
             </if>
-            <if test="lastUpdateTime != null and lastUpdateTime != ''">
+            <if test="lastUpdateTime != null ">
                 and last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
             </if>
             <if test="status != null and status != ''">

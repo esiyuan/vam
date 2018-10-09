@@ -11,17 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/assets/javascripts/type.js"></script>
 
-    <style>
-        .errorMsg {
-            display: none;
-            position: absolute;
-            top: 1%;
-            left: 20%;
-            width: 60%;
-            z-index: 10;
-            overflow: hidden;
-        }
-    </style>
+
 
 </head>
 <body class='main page'>

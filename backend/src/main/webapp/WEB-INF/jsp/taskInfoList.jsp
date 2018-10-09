@@ -40,10 +40,10 @@
                                 </div>
                                 <div class='form-group col-md-4'>
                                     <label class="control-label">任务状态:</label>
-                                    <input hidden="hidden" id="selectStatus" name="status"
+                                    <input hidden="hidden" id="statusValue" name="status"
                                            value="${param["status"]}"/>
                                     <select class='form-control' id="statusSelect"
-                                            onchange="statusSelect()">
+                                            onchange="selectStatusChange()">
                                         <option value="0">待执行</option>
                                         <option value="1">执行中</option>
                                     </select>
@@ -52,10 +52,10 @@
 
                             <div class="row">
                                 <div class='form-group col-md-4'>
-                                    <label class="control-label">结束时间:</label>
+                                    <label class="control-label">开始时间:</label>
                                     <input id="nextRunTimeStart" type="text" class="form-control"
                                            name="nextRunTimeStart"
-                                           value="${param.nextRunTimeStart}}"/>
+                                           value="${param.nextRunTimeStart}"/>
                                 </div>
                                 <div class='form-group col-md-4'>
                                     <label class="control-label">结束时间:</label>
@@ -108,10 +108,10 @@
                     <td>
                         <c:choose>
                             <c:when test="${each['status'] == 0}">
-                                <i class='glyphicon'>关闭</i>
+                                <i class='glyphicon'>待执行</i>
                             </c:when>
                             <c:when test="${each['status'] == 1}">
-                                <i class='glyphicon'>开启</i>
+                                <i class='glyphicon'>执行中</i>
                             </c:when>
                         </c:choose>
                     </td>

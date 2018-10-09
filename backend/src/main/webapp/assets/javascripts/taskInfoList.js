@@ -7,9 +7,8 @@ $(function () {
         elem: '#nextRunTimeEnd', type: 'datetime'
     });
     initPage(taskSearch)
-    $("#statusSelect").val($("#selectStatus").val());
-})
-
+    $("#statusSelect").val($("#statusValue").val());
+});
 
 function taskSearch() {
     $("#listForm").submit();
@@ -30,7 +29,7 @@ function del(id) {
 
 }
 
-function statusSelect() {
-    $("#selectStatus").val($("#statusSelect").val());
+function selectStatusChange() {
+    $("#statusValue").val($("#statusSelect").val());
 }
 
