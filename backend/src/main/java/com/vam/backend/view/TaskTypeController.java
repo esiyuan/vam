@@ -93,9 +93,9 @@ public class TaskTypeController {
         } catch (Exception e) {
             ra.addFlashAttribute("errorMsg", e.getMessage());
             ra.addFlashAttribute("taskType", typeParamDto);
-            return "redirect:new";
+            return "redirect:new.htm";
         }
-        return "redirect:search";
+        return "redirect:search.htm";
     }
 
     @RequestMapping(value = "convertStatus.htm", method = RequestMethod.POST)

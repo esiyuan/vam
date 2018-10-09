@@ -8,61 +8,73 @@
     <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
     <title>任务详情管理</title>
     <link href="/assets/stylesheets/application-a07755f5.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/page/pagination.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/images/favicon.ico" rel="icon" type="image/ico"/>
     <script src="/assets/javascripts/jquery.min.js.js"></script>
     <script src="/assets/laydate/laydate.js"></script>
+    <script src="/assets/page/pagination.js"></script>
+    <script src="/assets/page/page.js"></script>
     <script src="/assets/javascripts/taskInfoList.js"></script>
+
 </head>
 <body class=''>
 <div id=''>
     <div class='panel panel-default grid'>
         <div class='panel-body'>
-            <form id="typeListForm" method="post" class="form-inline" role="form">
-                <input id="typeListPageStart" hidden="hidden" name="start" type='text'
-                       value="${page["start"]}"/>
-
+            <form id="listForm" method="post" action="search.htm" class="form-inline" role="form">
+                <%@include file="./common/cur_index.jsp" %>
                 <div class="row">
-                    <div class="col-md-9" style="padding-left: 10%">
-                        <fieldset>
+                    <fieldset>
+                        <div style="padding-left: 10%">
+
                             <div class="row">
-                                <div class='form-group col-md-6'>
+                                <div class='form-group col-md-4'>
                                     <label class="control-label ">任务类型:</label>
-                                    <input type="text" class="form-control" name="execMethod"
-                                           value="${taskType[" execMethod"]}"/>
+                                    <input type="text" class="form-control" name="bizType"
+                                           value="${param.bizType}"/>
                                 </div>
-                                <div class='form-group col-md-6'>
+                                <div class='form-group col-md-4'>
                                     <label class="control-label">业务主键:</label>
-                                    <input type="text" class="form-control" name="execMethod"
-                                           value="${taskType[" execMethod"]}"/>
-
+                                    <input type="text" class="form-control" name="bizKey"
+                                           value="${param.bizKey}"/>
+                                </div>
+                                <div class='form-group col-md-4'>
+                                    <label class="control-label">任务状态:</label>
+                                    <input hidden="hidden" id="selectStatus" name="status"
+                                           value="${param["status"]}"/>
+                                    <select class='form-control' id="statusSelect"
+                                            onchange="statusSelect()">
+                                        <option value="0">待执行</option>
+                                        <option value="1">执行中</option>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class='form-group col-md-6'>
+                                <div class='form-group col-md-4'>
                                     <label class="control-label">结束时间:</label>
-                                    <input id="nextRunTimeStart" type="text" class="form-control" name="execMethod"
-                                           value=""/>
+                                    <input id="nextRunTimeStart" type="text" class="form-control"
+                                           name="nextRunTimeStart"
+                                           value="${param.nextRunTimeStart}}"/>
                                 </div>
-                                <div class='form-group col-md-6'>
+                                <div class='form-group col-md-4'>
                                     <label class="control-label">结束时间:</label>
-                                    <input id="nextRunTimeEnd" type="text" class="form-control" name="execMethod"
-                                           value="" placeholder="SpringBean方式必要"/>
+                                    <input id="nextRunTimeEnd" type="text" class="form-control" name="nextRunTimeEnd"
+                                           value="${param.nextRunTimeEnd}"/>
+                                </div>
+                                <div class='form-group col-md-4'>
+                                    <button class='btn' type='button' value="查询" onclick="taskSearch()" title="查询">
+                                        <i class='glyphicon glyphicon-search'></i>
+                                    </button>
                                 </div>
                             </div>
-
-                        </fieldset>
-                    </div>
-                    <div class="col-md-3" style="border: 10px solid  #0f705d;">
-                        TWO
-                    </div>
+                        </div>
+                    </fieldset>
                 </div>
-
-
             </form>
         </div>
         <table class='table'>
-            <c:if test="${empty typeList}">
+            <c:if test="${empty taskList}">
                 <tr>
                     <td><span>没有数据！</span></td>
                 </tr>
@@ -105,26 +117,10 @@
                     </td>
 
                     <td class='action'>
-                        <a class='btn btn-info' data-toggle='tooltip' href='update?id=${each["id"]}' title='修改'>
-                            <i class='glyphicon glyphicon-edit'></i>
-                        </a>
-
                         <button class='btn btn-danger' type='button' onclick="del(${each["id"]})"
                                 title="删除">
                             <i class='glyphicon glyphicon-trash'></i>
                         </button>
-                        <c:if test="${each['status'] == 0}">
-                            <button class='btn btn-warning' type='button' onclick="statusConvert(${each["id"]}, 1)"
-                                    title="开启">
-                                <i class='glyphicon glyphicon-play'></i>
-                            </button>
-                        </c:if>
-                        <c:if test="${each['status'] == 1}">
-                            <button class='btn btn-warning' type='button' onclick="statusConvert(${each["id"]}, 0)"
-                                    title="关闭">
-                                <i class='glyphicon glyphicon-stop'></i>
-                            </button>
-                        </c:if>
                     </td>
                 </tr>
             </c:forEach>
@@ -139,28 +135,8 @@
                 <input type="text" id="statusConvertForm_bizType" name="bizType">
             </form>
         </div>
-
-        <div class='panel-footer' style="padding-left: 70%;">
-            <div class='pull-left'>
-                展示${page.indexStart} 到 ${page.indexEnd} 条 / 总共 ${page.totalCount} 条
-            </div>
-            <ul class='pagination pagination-sm '>
-                <li>
-                    <a href='#' onclick="taskSearch(${page["start"] - 1})">上一页</a>
-                </li>
-
-                <li>
-                    <a href='#' onclick="taskSearch(${page["start"] + 1})">下一页</a>
-                </li>
-            </ul>
-
-        </div>
+        <%@include file="./common/page.jsp" %>
     </div>
-
-
-
 </div>
-
-
 </body>
 </html>

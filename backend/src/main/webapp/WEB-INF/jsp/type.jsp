@@ -31,13 +31,13 @@
         <div class='panel panel-default'>
             <div class='panel-body'>
                 <c:if test="${not empty errorMsg}">
-                    <div id="errorMsg" class='errorMsg glyphicon glyphicon-exclamation-sign bg-danger'>
+                    <div id="errorMsg" class="alert alert-danger" role="alert">
                         <p>${errorMsg}</p>
                     </div>
                 </c:if>
 
                 <legend>任务类型设置</legend>
-                <form class='form-horizontal' role="form" action="typeSave" method="post">
+                <form class='form-horizontal' role="form" action="typeSave.htm" method="post">
                     <input type="text" name="id" hidden="hidden" value="${taskType["id"]}">
 
                     <fieldset>

@@ -21,4 +21,8 @@ public class TaskInfoViewService {
         Page<TaskInfoDmo> page = taskInfoMapper.search(taskInfoMap);
         return page;
     }
+
+    public int delete(long id) {
+        return taskInfoMapper.deleteByPrimaryKey(id);
+    }
 }

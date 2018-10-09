@@ -3,6 +3,7 @@ package com.vam.backend.view;
 import com.github.pagehelper.Page;
 import com.vam.backend.dto.TaskInfoParamDto;
 import com.vam.backend.dto.TaskTypeParamDto;
+import com.vam.backend.util.ViewConstants;
 import com.vam.task.dmo.TaskInfoDmo;
 import com.vam.task.dmo.TaskTypeDmo;
 import com.vam.task.util.BeanMapper;
@@ -10,11 +11,16 @@ import com.vam.task.viewfacade.TaskInfoViewService;
 import com.vam.task.viewfacade.VamPage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * 任务明细管理
@@ -52,6 +58,17 @@ public class TaskInfoController {
         modelMap.put("param", taskInfoParamDto);
         modelMap.put("page", vamPage);
     }
+
+
+    @RequestMapping(value = "delete.htm", method = RequestMethod.POST)
+    @ResponseBody
+    public String delete(@Param("id") Long id) {
+        log.info("delete 参数 :{}", id);
+        taskInfoViewService.delete(id);
+        return ViewConstants.ASYN_RETURN_OK;
+    }
+
+
 }
 
 
