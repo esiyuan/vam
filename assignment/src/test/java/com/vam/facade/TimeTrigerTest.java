@@ -25,6 +25,6 @@ public class TimeTrigerTest {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.execute("delete from vam_lock_log ");
         timeTriger.timeTrigger();
-
+        System.in.read();
     }
 }

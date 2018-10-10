@@ -13,7 +13,7 @@ public interface TaskInfoMapper {
     int insert(TaskInfoDmo record);
 
     /**
-     * 批量更新超时任务执行状态
+     * 批量更新超时任务执行状态为待执行
      *
      * @param records
      * @return

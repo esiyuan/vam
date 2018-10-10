@@ -4,16 +4,14 @@ import com.github.pagehelper.PageHelper;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.vam.task.dao.TaskInfoMapper;
+import com.vam.task.dao.TaskTypeMapper;
 import com.vam.task.dmo.TaskInfoDmo;
 import com.vam.task.dmo.TaskTypeDmo;
 import com.vam.task.dto.TaskInfoDto;
 import com.vam.task.dto.TaskListDto;
 import com.vam.task.exec.ExecutorIntf;
 import com.vam.task.exec.ExecutorProxy;
-import com.vam.task.service.intf.ExceptionService;
-import com.vam.task.service.intf.LockLogService;
-import com.vam.task.service.intf.TaskInfoService;
-import com.vam.task.service.intf.ThreadCountService;
+import com.vam.task.service.intf.*;
 import com.vam.task.util.VamConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -45,6 +43,8 @@ public class TaskInfoServiceImpl implements TaskInfoService {
     private TransactionTemplate transactionTemplate;
     @Autowired
     private ExecutorProxy executorProxy;
+    @Autowired
+    private TaskTypeService taskTypeService;
 
     @Override
     public void processTaskTimeout() {
@@ -52,10 +52,17 @@ public class TaskInfoServiceImpl implements TaskInfoService {
         record.setTimeoutTime(new Date());
         while (true) {
             PageHelper.startPage(1, VamConstants.PAGE_SIZE);
-
             List<TaskInfoDmo> taskInfoDmos = taskInfoMapper.selectRunningTaskOfTimeOut(record);
             if (CollectionUtils.isEmpty(taskInfoDmos)) {
                 break;
+            }
+            Iterator<TaskInfoDmo> iterator = taskInfoDmos.iterator();
+            while (iterator.hasNext()) {
+                TaskInfoDmo taskInfoDmo = iterator.next();
+                TaskTypeDmo taskTypeDmo = taskTypeService.selectByBizType(taskInfoDmo.getBizType());
+                if (dealTaskMove(taskTypeDmo, taskInfoDmo)) {
+                    iterator.remove();
+                }
             }
             log.info("超时任务:{}", taskInfoDmos);
             taskInfoMapper.batchUpdateRunStatusByPrimaryKey(taskInfoDmos);

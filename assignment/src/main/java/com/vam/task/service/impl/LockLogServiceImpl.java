@@ -52,6 +52,7 @@ public class LockLogServiceImpl implements LockLogService {
     public Long lock(String lockType, int timeoutMinutes) {
         log.debug("开始获取锁 {}", lockType);
         LockLogDmo lockLog = lockLogMapper.selectByLockType(lockType);
+        log.debug("锁 = {}", lockLog);
         if (lockLog == null) {
             try {
                 return addLockLog(lockType, timeoutMinutes);

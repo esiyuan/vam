@@ -25,7 +25,7 @@
     <!--任务执行中，并且超时的任务-->
     <select id="selectRunningTaskOfTimeOut" resultMap="BaseResultMap" parameterType="com.vam.task.dmo.TaskInfoDmo">
         select
-        id
+        <include refid="Base_Column_List"/>
         from vam_task_info
         where status = 1 and
         timeout_time &lt;= #{timeoutTime,jdbcType=TIMESTAMP}
@@ -141,7 +141,7 @@
     </update>
     <update id="batchUpdateRunStatusByPrimaryKey" parameterType="list">
         update vam_task_info
-        set status = #{status,jdbcType=INTEGER}
+        set status = 0
         where id in (
         <foreach collection="list" item="item" index="index" separator=",">
             <trim suffixOverrides=", ">

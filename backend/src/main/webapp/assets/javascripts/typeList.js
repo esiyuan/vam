@@ -4,6 +4,7 @@ $(function () {
 
 function taskSearch() {
     $("#typeListForm").submit();
+    $("#next_page").val($("#page_start").val())
 }
 
 function statusConvert(id, status) {
@@ -17,12 +18,9 @@ function statusConvert(id, status) {
         url: "convertStatus.htm",
         data: statusConvertForm.serialize(),// 要提交的表单 
         success: function (msg) {
-            console.info("msg =", msg)
+            taskSearch();
         }
     });
-    $("#next_page").val($("#page_start").val())
-    taskSearch();
-    console.info("启动关闭表单提交")
 }
 
 function del(id) {
@@ -32,10 +30,10 @@ function del(id) {
         url: "delete.htm",
         data: "id=" + id,// 要提交的表单 
         success: function (msg) {
-            console.info("msg =", msg)
+            taskSearch();
         }
     });
-    $("#next_page").val($("#page_start").val())
-    taskSearch();
+
+
     console.info("启动关闭表单提交")
 }

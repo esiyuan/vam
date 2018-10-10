@@ -17,6 +17,29 @@
         from vam_exception
         where id = #{id,jdbcType=BIGINT}
     </select>
+    <select id="search" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from vam_exception
+        <where>
+            <if test="bizKey != null and bizKey != ''">
+               and biz_key = #{bizKey,jdbcType=VARCHAR}
+            </if>
+            <if test="bizType != null and bizType != ''">
+                and biz_type = #{bizType,jdbcType=VARCHAR}
+            </if>
+            <if test="createTimeStart != null">
+               and  create_time &gt;= #{createTimeStart,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTimeEnd != null">
+               and  create_time &lt;= #{createTimeEnd,jdbcType=TIMESTAMP}
+            </if>
+            <if test="lastUpdateTime != null">
+              and  last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+            </if>
+
+        </where>
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from vam_exception
     where id = #{id,jdbcType=BIGINT}

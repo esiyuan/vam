@@ -6,10 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class SimpleProcessCallback implements ProcessCallback {
+public class SyncProcessCallback extends AbstractProcessCallback {
 
     @Override
     public void handlerResult(TaskListResultDto listResultDto) {
+        super.handlerResult(listResultDto);
         log.info("任务处理完成:{}", listResultDto);
     }
 }
