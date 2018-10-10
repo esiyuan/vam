@@ -22,6 +22,7 @@ public class TimeTriger {
     @Autowired
     private TaskInfoService taskInfoService;
 
+    @Scheduled(fixedRate = 30000)
     public void timeTrigger() {
         timeoutFacade.processTimeOut();
         List<TaskTypeDmo> taskTypeDmos = taskTypeService.selectAll();
