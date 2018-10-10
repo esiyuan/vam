@@ -1,0 +1,65 @@
+CREATE TABLE `vam_lock_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `lock_type` varchar(30) NOT NULL COMMENT '锁类型',
+  `create_time` datetime NOT NULL,
+  `timeout_time` datetime NOT NULL COMMENT '超时时间',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '锁的状态 0 未被持有 1被持有',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_locktype` (`lock_type`) USING BTREE,
+  KEY `idx_timeout_time` (`timeout_time`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `vam_exception` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `biz_key` varchar(30) NOT NULL DEFAULT '' COMMENT '业务主键',
+  `biz_type` varchar(30) NOT NULL,
+  `create_time` datetime(3) NOT NULL,
+  `last_update_time` datetime(3) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_key_type` (`biz_key`,`biz_type`) USING BTREE,
+  KEY `idx_type` (`biz_type`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=496 DEFAULT CHARSET=utf8mb4 COMMENT='异常补偿表';
+
+CREATE TABLE `vam_task_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `biz_key` varchar(30) NOT NULL DEFAULT '' COMMENT '业务主键',
+  `biz_type` varchar(30) NOT NULL DEFAULT '' COMMENT '业务类型',
+  `run_count` int(11) NOT NULL DEFAULT '0' COMMENT '运行次数',
+  `next_run_time` datetime(3) NOT NULL COMMENT '下次执行时间',
+  `create_time` datetime(3) NOT NULL COMMENT '创建时间',
+  `last_update_time` datetime(3) NOT NULL COMMENT '最后更新时间',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '任务状态 0 等待执行 1 执行中',
+  `timeout_time` datetime(3) NOT NULL COMMENT '超时时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_key_type` (`biz_key`,`biz_type`) USING BTREE,
+  KEY `idx_biz_type` (`biz_type`) USING BTREE,
+  KEY `idx_timeout` (`timeout_time`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=442 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `vam_task_type` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `biz_type` varchar(30) NOT NULL DEFAULT '' COMMENT '业务类型',
+  `max_run_times` int(11) NOT NULL DEFAULT '1' COMMENT '最大执行次数',
+  `run_intervals` varchar(50) NOT NULL COMMENT '重试运行时间间隔',
+  `delayed_run_minutes` int(11) NOT NULL DEFAULT '0' COMMENT '延时执行分钟数',
+  `exec_type` varchar(255) NOT NULL DEFAULT '' COMMENT '执行方式  http/spring',
+  `exec_service` varchar(100) NOT NULL DEFAULT '' COMMENT 'url或者spring bean name',
+  `exec_method` varchar(30) NOT NULL DEFAULT '' COMMENT '方法名  http为空',
+  `per_page_count` int(11) NOT NULL DEFAULT '0' COMMENT '单个线程处理数',
+  `per_thread_count` int(11) NOT NULL DEFAULT '0' COMMENT '此类型总线程数',
+  `timeout_minutes` int(11) NOT NULL DEFAULT '0' COMMENT '超时时间',
+  `exception_proc_type` int(11) NOT NULL DEFAULT '0' COMMENT '失败处理方式 0 默认 移到异常表 1 插入新的任务',
+  `exception_proc` varchar(30) NOT NULL DEFAULT '' COMMENT '插入新任务的任务类型',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '任务开关 0 关闭, 1打开',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_biz_type` (`biz_type`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `vam_thread_count` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `biz_type` varchar(30) NOT NULL DEFAULT '' COMMENT '任务类型',
+  `create_time` datetime(3) NOT NULL COMMENT '创建时间',
+  `timeout_time` datetime(3) NOT NULL COMMENT '超时时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_biz_type` (`biz_type`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+
