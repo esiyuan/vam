@@ -21,7 +21,7 @@ public class TaskTypeServiceImpl implements TaskTypeService {
 
     @Override
     public TaskTypeDmo selectByBizType(String bizType) {
-        return null;
+        return taskTypeMapper.selectByBizType(bizType);
     }
 
     @Override

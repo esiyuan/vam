@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String ctx = request.getContextPath();
+%>
 <html class='no-js' lang='en'>
 <head>
     <meta charset='utf-8'>
     <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
     <title>任务类型</title>
-    <link href="/assets/stylesheets/application-a07755f5.css" rel="stylesheet" type="text/css"/>
-    <link href="/assets/images/favicon.ico" rel="icon" type="image/ico"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/assets/javascripts/type.js"></script>
+    <link href="<%=ctx%>/assets/stylesheets/application-a07755f5.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=ctx%>/assets/images/favicon.ico" rel="icon" type="image/ico"/>
+    <script src="<%=ctx%>/assets/javascripts/jquery.min.js.js"></script>
+    <script src="<%=ctx%>/assets/javascripts/type.js"></script>
 
 
 
@@ -51,7 +54,7 @@
                                        value="${taskType["execType"]}"/>
                                 <select class='form-control' id="execTypeSelect" onchange="execTypeSelectF()">
                                     <option value="springBeanExecutor">SpringBean同步执行器</option>
-                                    <option value="asynExecutor">异步回调执行器</option>
+                                    <%--<option value="asynExecutor">异步回调执行器</option>--%>
                                 </select>
                             </div>
                         </div>

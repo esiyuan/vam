@@ -1,6 +1,9 @@
-<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String ctx = request.getContextPath();
+%>
+<!DOCTYPE html>
 <html class='no-js' lang='en'>
 <head>
 
@@ -8,13 +11,13 @@
     <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
     <title>任务类型管理</title>
 
-    <link href="/assets/stylesheets/application-a07755f5.css" rel="stylesheet" type="text/css"/>
-    <link href="/assets/images/favicon.ico" rel="icon" type="image/ico"/>
-    <link rel="stylesheet" href="/assets/page/pagination.css">
-    <script src="/assets/javascripts/jquery.min.js.js"></script>
-    <script src="/assets/page/pagination.js"></script>
-    <script src="/assets/page/page.js"></script>
-    <script src="/assets/javascripts/typeList.js"></script>
+    <link href="<%=ctx%>/assets/stylesheets/application-a07755f5.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=ctx%>/assets/images/favicon.ico" rel="icon" type="image/ico"/>
+    <link rel="stylesheet" href="<%=ctx%>/assets/page/pagination.css">
+    <script src="<%=ctx%>/assets/javascripts/jquery.min.js.js"></script>
+    <script src="<%=ctx%>/assets/page/pagination.js"></script>
+    <script src="<%=ctx%>/assets/page/page.js"></script>
+    <script src="<%=ctx%>/assets/javascripts/typeList.js"></script>
 </head>
 <body class=''>
 <div id=''>

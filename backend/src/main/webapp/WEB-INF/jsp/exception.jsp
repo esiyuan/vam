@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String ctx = request.getContextPath();
+%>
 <html class='no-js' lang='en'>
 <head>
 
     <meta charset='utf-8'>
     <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
     <title>异常管理</title>
-    <link href="/assets/stylesheets/application-a07755f5.css" rel="stylesheet" type="text/css"/>
-    <link href="/assets/page/pagination.css" rel="stylesheet" type="text/css"/>
-    <link href="/assets/images/favicon.ico" rel="icon" type="image/ico"/>
-    <script src="/assets/javascripts/jquery.min.js.js"></script>
-    <script src="/assets/laydate/laydate.js"></script>
-    <script src="/assets/page/pagination.js"></script>
-    <script src="/assets/page/page.js"></script>
-    <script src="/assets/javascripts/exception.js"></script>
+    <link href="<%=ctx%>/assets/stylesheets/application-a07755f5.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=ctx%>/assets/page/pagination.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=ctx%>/assets/images/favicon.ico" rel="icon" type="image/ico"/>
+    <script src="<%=ctx%>/assets/javascripts/jquery.min.js.js"></script>
+    <script src="<%=ctx%>/assets/laydate/laydate.js"></script>
+    <script src="<%=ctx%>/assets/page/pagination.js"></script>
+    <script src="<%=ctx%>/assets/page/page.js"></script>
+    <script src="<%=ctx%>/assets/javascripts/exception.js"></script>
 
 </head>
 <body class=''>
